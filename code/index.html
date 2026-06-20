@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AeroTask - A premium glassmorphic To-Do list web application designed to boost productivity with clean visuals, categories, priorities, and smooth animations.">
+  <meta name="author" content="AeroTask Dev Team">
+  <title>AeroTask // Premium Focus Hub</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Ambient Gradient Background Blobs -->
+  <div class="ambient-glow">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <div class="app-container">
+    <!-- Sidebar / Stats Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-icon">
+          <i data-lucide="check-square" class="icon-violet"></i>
+        </div>
+        <div class="brand-text">
+          <h1>AeroTask</h1>
+          <p>Elevate your productivity</p>
+        </div>
+      </div>
+
+      <div class="greeting-box">
+        <h2 id="greeting-msg">Hello there!</h2>
+        <p id="current-date">Saturday, June 20</p>
+      </div>
+
+      <!-- Progress Tracking Ring / Card -->
+      <div class="progress-card">
+        <div class="progress-info">
+          <span class="progress-title">Daily Progress</span>
+          <span class="progress-percentage" id="progress-percent">0%</span>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+        <div class="progress-details">
+          <span id="tasks-count-status">0 of 0 tasks completed</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Task Creation Panel -->
+      <section class="creator-card">
+        <form id="todo-form" autocomplete="off">
+          <div class="form-row-main">
+            <input type="text" id="task-input" placeholder="What needs to be accomplished today?" required maxlength="100">
+            <button type="submit" class="btn-primary" aria-label="Add task">
+              <i data-lucide="plus"></i>
+              <span>Add Task</span>
+            </button>
+          </div>
+
+          <div class="form-row-meta">
+            <!-- Category Selector -->
+            <div class="meta-field">
+              <label for="category-select">Category</label>
+              <div class="select-wrapper">
+                <i data-lucide="tag" class="field-icon"></i>
+                <select id="category-select">
+                  <option value="Work">💼 Work</option>
+                  <option value="Personal" selected>👤 Personal</option>
+                  <option value="Shopping">🛒 Shopping</option>
+                  <option value="Wellness">🌱 Wellness</option>
+                  <option value="Finance">💳 Finance</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Priority Selector -->
+            <div class="meta-field">
+              <label for="priority-select">Priority</label>
+              <div class="select-wrapper">
+                <i data-lucide="flag" class="field-icon"></i>
+                <select id="priority-select">
+                  <option value="Low">Low</option>
+                  <option value="Medium" selected>Medium</option>
+                  <option value="High">High</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Due Date Picker -->
+            <div class="meta-field">
+              <label for="due-date">Due Date</label>
+              <div class="date-wrapper">
+                <i data-lucide="calendar" class="field-icon"></i>
+                <input type="date" id="due-date">
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- Task Operations (Search, Filters, Sort) -->
+      <section class="controls-card">
+        <div class="search-box">
+          <i data-lucide="search" class="search-icon"></i>
+          <input type="text" id="search-input" placeholder="Search tasks...">
+        </div>
+
+        <div class="filter-sort-group">
+          <!-- Filters -->
+          <div class="filter-tabs">
+            <button class="filter-tab active" data-filter="all">All</button>
+            <button class="filter-tab" data-filter="active">Active</button>
+            <button class="filter-tab" data-filter="completed">Completed</button>
+          </div>
+
+          <!-- Sort -->
+          <div class="sort-wrapper">
+            <i data-lucide="sliders-horizontal" class="sort-icon"></i>
+            <select id="sort-select">
+              <option value="dateCreated-desc" selected>Newest First</option>
+              <option value="dateCreated-asc">Oldest First</option>
+              <option value="dueDate-asc">Due Date (Soonest)</option>
+              <option value="priority-desc">Priority (High to Low)</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tasks List Container -->
+      <section class="tasks-container">
+        <ul id="todo-list" class="todo-list">
+          <!-- Dynamically populated tasks go here -->
+        </ul>
+
+        <!-- Empty State illustration/message -->
+        <div id="empty-state" class="empty-state">
+          <div class="empty-illustration">
+            <i data-lucide="inbox"></i>
+          </div>
+          <h3>All caught up!</h3>
+          <p>No tasks found. Create a new task or modify your filters to see more.</p>
+        </div>
+      </section>
+
+      <!-- Batch Footer Controls -->
+      <footer class="list-footer">
+        <span id="active-tasks-count">0 active tasks remaining</span>
+        <button id="clear-completed-btn" class="btn-text" title="Remove all completed tasks">
+          <i data-lucide="trash-2"></i>
+          <span>Clear Completed</span>
+        </button>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Main JavaScript File -->
+  <script src="app.js"></script>
+  <script>
+    // Initialize Lucide Icons after the DOM renders
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+    });
+  </script>
+</body>
+</html>
